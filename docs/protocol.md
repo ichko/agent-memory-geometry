@@ -91,6 +91,6 @@ The separate context-selection comparison uses 15 source turns per query.
 
 Dependency versions match the local numerical validation environment. Small differences can still arise from numerical libraries or platforms.
 The paper used API model aliases rather than retained dated snapshots. Exact generation replay is not guaranteed.
-The paper PDF and its figures are the existing preprint artifacts. This export does not revise their claims or layout.
+The preprint links to this analysis release. Its results and figures are unchanged.
 Answer-anchor decomposition remains a proxy analysis, not a verified error taxonomy.
 Raw answer-anchor inputs and manual fact-coverage annotations are not part of this release.

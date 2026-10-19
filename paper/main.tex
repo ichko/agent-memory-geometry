@@ -138,6 +138,9 @@ across unseen memory architectures remains unreliable.
   \label{fig:manifold}
 \end{figure}
 
+\noindent Analysis code and numerical artifacts:
+\href{https://github.com/ichko/agent-memory-geometry}{github.com/ichko/agent-memory-geometry}.
+
 \section{Related work}
 
 \paragraph{Agent-memory benchmarks and systems.}
@@ -766,7 +769,9 @@ Answer prompts vary by implementation, supplying memories as context
 and the question as a user message.
 LongMemEval judging uses question-type-specific prompts.
 Dated model snapshots were not retained, so exact replay is not guaranteed.
-This version does not link a complete public release of the harness and artifacts.
+The linked analysis release supports offline reproduction from derived numerical
+artifacts. It excludes the original multi-backend harness, raw textual logs, and
+embedding caches. Memory construction, generation, and judging are not rerun.
 
 \paragraph{LoCoMo procedure.}
 We use 10 conversations and 1{,}986 questions:
