@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this analysis, please cite the paper."
+type: software
+title: "The Geometry of Agent Memory: Forecasting Retrieval-Bound Memory Failures, and Characterizing Its Limits"
+version: 0.1.0
+date-released: 2026-10-19
+url: "https://github.com/ichko/agent-memory-geometry"
+repository-code: "https://github.com/ichko/agent-memory-geometry"
+authors:
+  - family-names: Zhechev
+    given-names: Iliya
+  - family-names: Ralev
+    given-names: Radoslav
+  - family-names: Coleman
+    given-names: Chris
+  - family-names: Rajamohan
+    given-names: Srijith
+  - family-names: Agarwal
+    given-names: Jen
+  - family-names: Hutcherson
+    given-names: Tyler
+  - family-names: Khadder
+    given-names: Simba
+preferred-citation:
+  type: conference-paper
+  title: "The Geometry of Agent Memory: Forecasting Retrieval-Bound Memory Failures, and Characterizing Its Limits"
+  authors:
+    - family-names: Zhechev
+      given-names: Iliya
+    - family-names: Ralev
+      given-names: Radoslav
+    - family-names: Coleman
+      given-names: Chris
+    - family-names: Rajamohan
+      given-names: Srijith
+    - family-names: Agarwal
+      given-names: Jen
+    - family-names: Hutcherson
+      given-names: Tyler
+    - family-names: Khadder
+      given-names: Simba
+  year: 2026
+  collection-title: "PALM Workshop at NeurIPS 2026"
+  url: "https://openreview.net/forum?id=xP0xvmQZhB"

@@ -1,0 +1,100 @@
+\begin{thebibliography}{14}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Carmel and Yom-Tov(2010)]{carmel2010estimating}
+David Carmel and Elad Yom-Tov.
+\newblock \emph{Estimating the Query Difficulty for Information Retrieval}.
+\newblock Morgan \& Claypool, 2010.
+
+\bibitem[Chhikara et~al.(2025)Chhikara, Khant, Aryan, Singh, and
+  Yadav]{chhikara2025mem0}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav.
+\newblock {Mem0}: Building production-ready ai agents with scalable long-term
+  memory.
+\newblock \emph{arXiv preprint arXiv:2504.19413}, 2025.
+
+\bibitem[Cronen-Townsend et~al.(2002)Cronen-Townsend, Zhou, and
+  Croft]{cronentownsend2002predicting}
+Steve Cronen-Townsend, Yun Zhou, and W.~Bruce Croft.
+\newblock Predicting query performance.
+\newblock In \emph{Proceedings of the 25th ACM SIGIR Conference on Research and
+  Development in Information Retrieval}, 2002.
+
+\bibitem[Es et~al.(2024)Es, James, Espinosa-Anke, and Schockaert]{es2024ragas}
+Shahul Es, Jithin James, Luis Espinosa-Anke, and Steven Schockaert.
+\newblock {RAGAS}: Automated evaluation of retrieval augmented generation.
+\newblock In \emph{Conference of the European Chapter of the Association for
+  Computational Linguistics (EACL): System Demonstrations}, 2024.
+
+\bibitem[Geifman and El-Yaniv(2017)]{geifman2017selective}
+Yonatan Geifman and Ran El-Yaniv.
+\newblock Selective classification for deep neural networks.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2017.
+
+\bibitem[Hendrycks and Gimpel(2017)]{hendrycks2017baseline}
+Dan Hendrycks and Kevin Gimpel.
+\newblock A baseline for detecting misclassified and out-of-distribution
+  examples in neural networks.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2017.
+
+\bibitem[Kadavath et~al.(2022)Kadavath, Conerly, Askell,
+  et~al.]{kadavath2022know}
+Saurav Kadavath, Tom Conerly, Amanda Askell, et~al.
+\newblock Language models (mostly) know what they know.
+\newblock \emph{arXiv preprint arXiv:2207.05221}, 2022.
+
+\bibitem[Maharana et~al.(2024)Maharana, Lee, Tulyakov, Bansal, Barbieri, and
+  Fang]{maharana2024locomo}
+Adyasha Maharana, Dong-Ho Lee, Sergey Tulyakov, Mohit Bansal, Francesco
+  Barbieri, and Yuwei Fang.
+\newblock Evaluating very long-term conversational memory of {LLM} agents.
+\newblock In \emph{Annual Meeting of the Association for Computational
+  Linguistics (ACL)}, 2024.
+
+\bibitem[Rasmussen et~al.(2025)Rasmussen, Paliychuk, Beauvais, Ryan, and
+  Chalef]{rasmussen2025zep}
+Preston Rasmussen, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, and Daniel
+  Chalef.
+\newblock {Zep}: A temporal knowledge graph architecture for agent memory.
+\newblock \emph{arXiv preprint arXiv:2501.13956}, 2025.
+
+\bibitem[Rousseeuw(1987)]{rousseeuw1987silhouettes}
+Peter~J. Rousseeuw.
+\newblock Silhouettes: A graphical aid to the interpretation and validation of
+  cluster analysis.
+\newblock \emph{Journal of Computational and Applied Mathematics}, 20:\penalty0
+  53--65, 1987.
+
+\bibitem[Roy and Vetterli(2007)]{roy2007effective}
+Olivier Roy and Martin Vetterli.
+\newblock The effective rank: A measure of effective dimensionality.
+\newblock In \emph{European Signal Processing Conference (EUSIPCO)}, 2007.
+
+\bibitem[Saad-Falcon et~al.(2024)Saad-Falcon, Khattab, Potts, and
+  Zaharia]{saadfalcon2024ares}
+Jon Saad-Falcon, Omar Khattab, Christopher Potts, and Matei Zaharia.
+\newblock {ARES}: An automated evaluation framework for retrieval-augmented
+  generation systems.
+\newblock In \emph{Conference of the North American Chapter of the Association
+  for Computational Linguistics (NAACL)}, 2024.
+
+\bibitem[van~der Maaten and Hinton(2008)]{vandermaaten2008tsne}
+Laurens van~der Maaten and Geoffrey Hinton.
+\newblock Visualizing data using t-{SNE}.
+\newblock \emph{Journal of Machine Learning Research}, 9:\penalty0 2579--2605,
+  2008.
+
+\bibitem[Wu et~al.(2025)Wu, Wang, Yu, Zhang, Chang, and Yu]{wu2025longmemeval}
+Di~Wu, Hongwei Wang, Wenhao Yu, Yuwei Zhang, Kai-Wei Chang, and Dong Yu.
+\newblock {LongMemEval}: Benchmarking chat assistants on long-term interactive
+  memory.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2025.
+
+\end{thebibliography}

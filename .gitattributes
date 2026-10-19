@@ -1,0 +1,7 @@
+* text=auto
+*.csv text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.pdf binary
+# Preserve the official template, including its original whitespace.
+paper/neurips_2026.sty whitespace=-blank-at-eol
