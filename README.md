@@ -8,7 +8,7 @@ Iliya Zhechev, Radoslav Ralev, Chris Coleman, Srijith Rajamohan, Jen Agarwal, Ty
 
 Accepted as a poster at PALM, NeurIPS 2026.
 
-[Paper and reviews](https://openreview.net/forum?id=xP0xvmQZhB) · [Paper PDF](paper/geometry_of_agent_memory.pdf) · [Protocol](docs/protocol.md)
+[arXiv](https://arxiv.org/abs/2610.26433) · [Paper and reviews](https://openreview.net/forum?id=xP0xvmQZhB) · [Paper PDF](paper/geometry_of_agent_memory.pdf) · [Protocol](docs/protocol.md)
 
 ## What this study shows
 
