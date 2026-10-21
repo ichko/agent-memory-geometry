@@ -20,6 +20,30 @@ After controlling for difficulty and system identity, geometry adds only +0.002 
 Performance varies by question type. The strongest category result also has a strong system-identity baseline.
 These results characterize the evaluated representations. They do not establish a reliable deployment diagnostic or verify why individual answers fail.
 
+## Memory Atlas explorer
+
+The static explorer under `site/` shows real conversation sessions as chronological paths in a shared embedding map.
+UMAP is the default. Optional t-SNE and PCA provide comparison views. Toggle 2D/3D when real three-axis layouts are present; t-SNE is 2D only.
+In 3D, drag to rotate, Shift-drag to pan, and scroll to zoom. Select a path to read its turns.
+The viewer supports history filtering, text search, memory overlays, and wheel/trackpad navigation.
+**Inspect memories** links a stored memory to its closest source turns and a turn-by-memory heatmap.
+These use precomputed cosine similarities in the original embedding space, not projected distances.
+Sampled overlays are labeled; these are candidate correspondences, not verified provenance or factual coverage.
+
+```sh
+python3 tools/serve_atlas.py --data outputs/atlas/atlas.json
+```
+
+Open `http://127.0.0.1:8766/`. The local atlas uses the public `redis/langcache-embed-v3-small` model.
+The viewer contains no synthetic fallback and makes no embedding API calls.
+Raw text, embeddings, and generated atlas files stay under ignored `outputs/`, outside the publishable site directory.
+See [docs/explorer.md](docs/explorer.md) to build an atlas from your own local benchmark files.
+
+To host the viewer on GitHub Pages, select **Settings → Pages → Source → GitHub Actions**,
+then run **Actions → Publish Memory Atlas → Run workflow** on `main`.
+The workflow publishes `site/` only. Without a separately published atlas, visitors must use **Open atlas**
+to load their own JSON; the local preview dataset is not bundled automatically.
+
 ## Reproduce the analysis
 
 Use Python 3.11 or 3.12 and [uv](https://docs.astral.sh/uv/).
@@ -77,7 +101,8 @@ See `selection.py` for closest, farthest, and random context-subset selection.
 This is an **offline analysis release**, not the original multi-backend benchmark harness.
 It includes feature computation, evaluation, numerical results, paper sources, and published figures.
 
-It excludes backend integrations, deployment tooling, raw conversations, memory text, generated answers, embedding caches, credentials, and the source repository's history.
+It excludes backend integrations, backend deployment tooling, raw benchmark conversations, memory text, generated answers, embedding caches, credentials, and the source repository's history.
+The explorer's optional deployment workflow publishes only the static viewer, not local atlas data or a backend.
 The tables retain correctness labels and derived numerical features. Question IDs use consistent anonymous identifiers.
 
 Reproducing memory construction, answer generation, or judging requires separate implementations and the original benchmark data.

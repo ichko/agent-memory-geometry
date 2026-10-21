@@ -5,8 +5,24 @@ Use Python 3.11 or 3.12 with uv. Run `uv sync --locked` for dependencies.
 Tests: `uv run python -m unittest discover -s tests -v`.
 Numerical checks: `uv run memory-geometry-reproduce --check-paper --n-boot 0 --no-plots`.
 Publication check: `uv run python tools/check_release.py`.
+Explorer tests: `node --test tests/explorer.test.mjs` (Node.js 20+).
+Local explorer: `python3 tools/serve_atlas.py --data outputs/atlas/atlas.json`.
+The explorer uses plain HTML/CSS/JavaScript. No build step or external browser dependencies are required.
+The optional `explorer` extra provides local Sentence Transformers and UMAP preprocessing.
+It also includes openTSNE. Add a shared real 2D t-SNE fit with `uv run python tools/build_atlas.py --output outputs/atlas --add-tsne`.
+Add original-space cosine matrices with `uv run python tools/build_atlas.py --output outputs/atlas --correspondence`.
+The matrices are lazy-loaded per history from ignored `outputs/atlas/correspondence/`; never publish them automatically.
+Memory-to-turn links and heatmap colors must use these original-space scores, never projected distances. Call them candidate matches, not verified provenance or fact coverage.
+Add real 3D layouts to an existing local atlas with `uv run python tools/build_atlas.py --output outputs/atlas --add-3d`.
+This reuses cached vectors and must preserve the existing 2D coordinates. Never invent a depth axis.
 
 Keep historical evaluation choices explicit. Do not silently replace preprocessing and claim exact reproduction.
 Do not commit raw conversations, questions, memories, generated answers, credentials, embedding caches, or backend deployments.
+Use real embedding-model outputs with recorded provenance. Do not substitute synthetic examples in the viewer.
+Conversation paths connect turns only within one session. Never silently join separate sessions or claim sampled memory overlays are complete.
+Show all visible conversation paths as faint gray hairlines by default. Hover is a stronger C0-blue line; selection is thicker C4 purple. Lines themselves must be pickable between dots. Never use black highlights or couple path visibility to marker opacity.
+Automatic marker opacity follows local screen density, not zoom alone. Filtered/sparse conversations must remain clearly visible at overview zoom. Keep marker sizes fixed and GPU batching intact. Gray context paths stay soft even in sparse views (at most 45% opacity and 0.5 CSS pixels); hover and selection provide emphasis. Dense overview paths remain hairlines. Depth shading must not make points disappear.
+Named t-SNE comparison fits use `--tsne-layout local --perplexity 10` and `--tsne-layout broad --perplexity 50`. Preserve the original fit; record metric, iterations, and exaggeration. Never use conversation or correctness labels to force separation.
+Keep local JSON imports and screenshots under ignored `outputs/`. Do not publish or modify the paper without the user's request.
 Preserve upstream data terms and template notices. Do not assign a software license without author approval.
 Use `data/manifest.json` to check numerical artifact integrity. Generated output belongs under `outputs/`.

@@ -118,6 +118,9 @@ def main():
             continue
         allowed = (len(relative.parts) == 1 and path.name in {".gitattributes", ".gitignore", "AGENTS.md", "CITATION.cff", "NOTICE.md", "README.md", "pyproject.toml", "uv.lock"})
         allowed |= relative.parts[0] in {"src", "tests", "tools"} and path.suffix == ".py"
+        allowed |= relative.as_posix() == "tests/explorer.test.mjs"
+        allowed |= relative.parts[0] == "site" and path.suffix in {".html", ".css", ".js", ".mjs"}
+        allowed |= relative.as_posix() == ".github/workflows/pages.yml"
         allowed |= relative.parts[0] == "docs" and path.suffix == ".md"
         allowed |= relative.parts[0] == "data" and (path.suffix == ".csv" or relative.as_posix() in {"data/README.md", "data/manifest.json"})
         allowed |= relative.parts[0] == "paper" and path.suffix in {".tex", ".bbl", ".bib", ".sty", ".pdf"}
