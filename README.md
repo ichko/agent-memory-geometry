@@ -9,7 +9,7 @@ Memory Atlas: https://www.izhv.eu/agent-memory-geometry/atlas.html
 
 This branch contains all 500 LongMemEval-small histories, 18,464 conversation paths, sampled memory overlays,
 precomputed UMAP/PCA/t-SNE layouts, real 3D layouts, and lazy-loaded original-space cosine similarities.
-The paper landing page loads no map data. Opening the separate Atlas downloads about 110 MB of compressed data;
+The paper landing page loads a compact 3D sample with memory callouts. Opening the separate Atlas downloads about 110 MB of compressed data;
 similarity files load only when inspected.
 
 See [data attribution](data-notice.html) and [file checksums](publication-manifest.json).

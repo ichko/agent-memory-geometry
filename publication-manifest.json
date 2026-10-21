@@ -12,14 +12,24 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "README.md",
+      "bytes": 1442,
+      "sha256": "15c7e69e83a038aa2b00685c12f17d33d92543f7961feb1f3dc48ae7d95c062c"
+    },
+    {
       "path": "app.js",
       "bytes": 45794,
       "sha256": "ff194fc10e702cc28250a326789246923a637e09ab498b5b3764c179cde7552d"
     },
     {
+      "path": "atlas-preview.svg",
+      "bytes": 158063,
+      "sha256": "678c98c806bd701022053c91539625da697a97d87206cbb02fbd9036fb6917d8"
+    },
+    {
       "path": "atlas.html",
-      "bytes": 7713,
-      "sha256": "81091632fb10ecc28cc6d4a534d49cd7f4d9fdb353d41874966c3c023c5a6f9a"
+      "bytes": 7724,
+      "sha256": "f7828dd4907e4d0b8022db7716cb712a1ca6674d3e5bbce1f2bf1407b9b2a15d"
     },
     {
       "path": "atlas.json",
@@ -2693,8 +2703,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 6347,
-      "sha256": "89aff54eb0844f85dee40aa4c4101134be424f2f731e358503de7db34f14b741"
+      "bytes": 7506,
+      "sha256": "982faaf2c99b052ccddba7c36ec503390e00566087b18f3a5de6f9844fe8d7e7"
     },
     {
       "path": "inspector.mjs",
@@ -2702,9 +2712,14 @@
       "sha256": "c5f7bde1db7c07a139c3929366b8698942e3c33a3372c3122ed4bac96a1c3b94"
     },
     {
+      "path": "landing-preview.js",
+      "bytes": 9982,
+      "sha256": "a1b203fbe9b9f342c6ee0acad6a991f85485efce9f50d8fb6343bbbc452a358c"
+    },
+    {
       "path": "landing.css",
-      "bytes": 5602,
-      "sha256": "d2c9b2eee4e439174fe2832e066fed891630f96d7e2486574c66cd5e41ea744c"
+      "bytes": 8472,
+      "sha256": "709c6b0f7b9e8f433327910bc280e85d447eeeaacacf0368b1c63ebee7b1e67c"
     },
     {
       "path": "navigation.mjs",
@@ -2720,6 +2735,16 @@
       "path": "points.mjs",
       "bytes": 15780,
       "sha256": "227d7a174f41619dec712ab09db8bc61579dfec476b3501d5c39282bbf7a35f0"
+    },
+    {
+      "path": "preview-data.mjs",
+      "bytes": 604847,
+      "sha256": "6d10a32468a0cda3f9f1bf917a930cbb12ec2fc52a1ff565e9499e0f7096ffef"
+    },
+    {
+      "path": "preview.mjs",
+      "bytes": 5275,
+      "sha256": "364e83fabb5625ee198be92f8615979945f8c47f4f90245e97e2b26df615760c"
     },
     {
       "path": "spatial.mjs",
