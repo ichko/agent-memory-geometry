@@ -28,8 +28,8 @@
     },
     {
       "path": "atlas.html",
-      "bytes": 7724,
-      "sha256": "f7828dd4907e4d0b8022db7716cb712a1ca6674d3e5bbce1f2bf1407b9b2a15d"
+      "bytes": 7790,
+      "sha256": "1bf4b7fe876dfbdc16761b5421583afd5ac94a5bf83c9ed0cd385c7de27d0bd0"
     },
     {
       "path": "atlas.json",
@@ -2553,8 +2553,8 @@
     },
     {
       "path": "data-notice.html",
-      "bytes": 2527,
-      "sha256": "6f04f74dba43e1dc3eb6f2b46060a11c6e182ed011bfa5a3ecb2b39bd858c0f4"
+      "bytes": 2590,
+      "sha256": "fe4a9a6a6550a0d1a5eff872f865cfe5e299c6560bcac613025a67b17bb639e3"
     },
     {
       "path": "data/metadata.json.gz",
@@ -2702,9 +2702,14 @@
       "sha256": "c1629d25fce49b71eabf3b45e99178a97cb04330ac1a70847eed269e4292f7ee"
     },
     {
+      "path": "favicon.svg",
+      "bytes": 966,
+      "sha256": "b7ca3bf45966a09b55f19defc6bbb003104b2d00c5b2257ba68627213b592730"
+    },
+    {
       "path": "index.html",
-      "bytes": 7506,
-      "sha256": "982faaf2c99b052ccddba7c36ec503390e00566087b18f3a5de6f9844fe8d7e7"
+      "bytes": 7572,
+      "sha256": "54eb07a18373bc44595fac178e769d3e3897a9e68cf1b851bffb852124ac2a1a"
     },
     {
       "path": "inspector.mjs",
