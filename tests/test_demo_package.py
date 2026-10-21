@@ -4,12 +4,42 @@ import gzip
 import json
 import tempfile
 import unittest
+from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from tools.package_demo import fingerprint, package, redact_display
 
 
 class DemoPackageTests(unittest.TestCase):
+    def test_paper_page_is_script_free_and_local_navigation_resolves(self):
+        site = Path(__file__).resolve().parents[1] / "site"
+
+        class Links(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.links = []
+                self.scripts = []
+
+            def handle_starttag(self, tag, attrs):
+                values = dict(attrs)
+                if tag == "a" and "href" in values:
+                    self.links.append(values["href"])
+                if tag == "script":
+                    self.scripts.append(values)
+
+        for page in ["index.html", "atlas.html", "data-notice.html"]:
+            parsed = Links()
+            parsed.feed((site / page).read_text())
+            for link in parsed.links:
+                url = urlsplit(link)
+                if not url.scheme and not url.netloc:
+                    target = site / (url.path or page)
+                    self.assertTrue(target.is_file() or (target.is_dir() and (target / "index.html").is_file()), f"Broken local link: {page}: {link}")
+            if page == "index.html":
+                self.assertFalse(parsed.scripts)
+                self.assertIn("connect-src 'none'", (site / page).read_text())
+
     def fixture(self, root):
         texts = ["Source turn", "Question", "Memory"]
         points = [{"text": text, "umap": [i, i], "pca": [i, i]} for i, text in enumerate(texts)]
@@ -32,6 +62,11 @@ class DemoPackageTests(unittest.TestCase):
             self.assertEqual(json.loads(gzip.decompress((root / "site/correspondence/h1.json.gz").read_bytes()))["systems"]["m1"]["scores"], [.75])
             self.assertEqual(result["histories"], 1)
             self.assertTrue((root / "site/.nojekyll").exists())
+            landing = (root / "site/index.html").read_text()
+            self.assertIn('href="./atlas.html"', landing)
+            self.assertNotIn("app.js", landing)
+            self.assertIn('id="atlas-canvas"', (root / "site/atlas.html").read_text())
+            self.assertTrue((root / "site/landing.css").exists())
             self.assertFalse((root / "site/vectors.npy").exists())
             with self.assertRaisesRegex(ValueError, "empty output"):
                 package(root / "atlas.json", root / "public.json", root / "site")

@@ -36,7 +36,8 @@ Sampled overlays are labeled; these are candidate correspondences, not verified 
 python3 tools/serve_atlas.py --data outputs/atlas/atlas.json
 ```
 
-Open `http://127.0.0.1:8766/`. The local atlas uses the public `redis/langcache-embed-v3-small` model.
+Open `http://127.0.0.1:8766/` for the paper page, then follow the Atlas link (or open `/atlas.html` directly).
+The local atlas uses the public `redis/langcache-embed-v3-small` model.
 The viewer contains no synthetic fallback and makes no embedding API calls.
 Raw text, embeddings, and generated atlas files stay under ignored `outputs/`, outside the publishable site directory.
 See [docs/explorer.md](docs/explorer.md) to build an atlas from your own local benchmark files.

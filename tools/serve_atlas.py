@@ -1,4 +1,4 @@
-"""Serve the static viewer and an ignored local atlas on localhost only."""
+"""Serve the paper page, viewer, and ignored atlas data on localhost only."""
 
 from __future__ import annotations
 
@@ -60,7 +60,8 @@ def main() -> None:
                 return io.BytesIO(payload)
             return super().send_head()
 
-    print(f"Memory Atlas: http://127.0.0.1:{args.port}/", flush=True)
+    print(f"Paper page: http://127.0.0.1:{args.port}/", flush=True)
+    print(f"Memory Atlas: http://127.0.0.1:{args.port}/atlas.html", flush=True)
     print("Local data is served separately from the publishable site directory.", flush=True)
     ThreadingHTTPServer(("127.0.0.1", args.port), Handler).serve_forever()
 

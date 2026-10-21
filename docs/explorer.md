@@ -1,5 +1,9 @@
 # Memory Atlas
 
+The project root is a paper landing page. It links to `atlas.html`, the full explorer.
+The landing page is static, needs no JavaScript, and does not download any atlas data.
+Its poster entry is non-interactive until the authors provide a poster file.
+
 Memory Atlas shows many real conversations in one shared embedding space.
 Each path joins consecutive turns within one session. Separate sessions are never connected.
 Hover a turn to highlight its conversation. Select it to read the source text.
@@ -113,7 +117,8 @@ provenance. Paths join turns only within their own sessions, including in guided
 python3 tools/serve_atlas.py --data outputs/atlas/atlas.json
 ```
 
-Open `http://127.0.0.1:8766/`. The server binds only to localhost.
+Open `http://127.0.0.1:8766/` for the paper page, or `http://127.0.0.1:8766/atlas.html` for the explorer.
+The server binds only to localhost.
 It serves the static viewer from `site/` and the selected ignored atlas separately as `/atlas.json`.
 The atlas is not copied into the publishable site directory.
 No private repository configuration, model weights, source embedding cache, or benchmark logs are served.
