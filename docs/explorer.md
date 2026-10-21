@@ -2,7 +2,7 @@
 
 The project root is a paper landing page. It links to `atlas.html`, the full explorer.
 The landing page is static, needs no JavaScript, and does not download any atlas data.
-Its poster entry is non-interactive until the authors provide a poster file.
+The poster link is omitted until the authors provide a poster file.
 
 Memory Atlas shows many real conversations in one shared embedding space.
 Each path joins consecutive turns within one session. Separate sessions are never connected.

@@ -9,8 +9,8 @@ Explorer tests: `node --test tests/explorer.test.mjs` (Node.js 20+).
 Local explorer: `python3 tools/serve_atlas.py --data outputs/atlas/atlas.json`.
 The explorer uses plain HTML/CSS/JavaScript. No build step or external browser dependencies are required.
 `site/index.html` is the lightweight paper landing page; `site/atlas.html` opens the explorer. The landing page must not load atlas data or `app.js`.
-The shared design uses warm white, serif headings, red accents, and thin rules. Do not apply the UI accent palette to the plot's category colors, marker sizes, or path styling.
-The poster resource stays non-interactive until the authors provide their own poster. Never publish an unrelated design-reference PDF.
+The landing page uses warm white, serif headings, red accents, and thin rules. The Atlas is a compact tool with a small sans-serif header, tight controls, warm neutral chrome, and the same red UI accent. Do not apply the UI accent palette to the plot's category colors, marker sizes, or path styling.
+Keep the landing-page title and subtitle compact, without forced line breaks. Omit poster links and placeholders until the authors provide their own poster. Never publish an unrelated design-reference PDF.
 The optional `explorer` extra provides local Sentence Transformers and UMAP preprocessing.
 It also includes openTSNE. Add a shared real 2D t-SNE fit with `uv run python tools/build_atlas.py --output outputs/atlas --add-tsne`.
 Add original-space cosine matrices with `uv run python tools/build_atlas.py --output outputs/atlas --correspondence`.
