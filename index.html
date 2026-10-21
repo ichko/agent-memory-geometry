@@ -3,37 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A study of how conversation turns, stored memories, and queries relate in embedding space, and what those relationships tell us about answer correctness.">
+  <meta name="description" content="An offline study of relationships between conversations, stored memories, queries, and answer correctness across five evaluated memory systems.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta property="og:title" content="The Geometry of Agent Memory">
   <meta property="og:description" content="Studying relationships between conversations, stored memories, and queries. PALM Workshop at NeurIPS 2026.">
   <meta property="og:type" content="website">
   <title>The Geometry of Agent Memory</title>
-  <link rel="stylesheet" href="./landing.css">
+  <link rel="stylesheet" href="./landing.css?v=3">
 </head>
 <body>
   <a class="skip-link" href="#study">Skip to the study</a>
   <div class="page">
-    <header class="masthead">
-      <a class="site-name" href="./">Agent memory / Research</a>
-      <a class="atlas-nav" href="./atlas.html">Memory Atlas <span aria-hidden="true">↗</span></a>
-    </header>
-
     <main>
       <section class="hero" aria-labelledby="paper-title">
         <p class="eyebrow">PALM Workshop · NeurIPS 2026 · Poster</p>
-        <h1 id="paper-title">The Geometry of<br>Agent Memory</h1>
-        <p class="subtitle">Forecasting Retrieval-Bound Memory Failures,<br class="wide-break"> and Characterizing Its Limits</p>
+        <h1 id="paper-title">The Geometry of Agent Memory</h1>
+        <p class="subtitle">Forecasting Retrieval-Bound Memory Failures, and Characterizing Its Limits</p>
         <ul class="authors" aria-label="Authors">
-          <li>Iliya Zhechev</li><li>Radoslav Ralev</li><li>Chris Coleman</li><li>Srijith Rajamohan</li><li>Jen Agarwal</li><li>Tyler Hutcherson</li><li>Simba Khadder</li>
+          <li><a href="https://www.linkedin.com/in/iliya-zhechev/" aria-label="Iliya Zhechev on LinkedIn">Iliya Zhechev</a></li>
+          <li><a href="https://www.linkedin.com/in/radoslav-ralev-aaa799156/" aria-label="Radoslav Ralev on LinkedIn">Radoslav Ralev</a></li>
+          <li><a href="https://www.linkedin.com/in/c-col/" aria-label="Chris Coleman on LinkedIn">Chris Coleman</a></li>
+          <li><a href="https://www.linkedin.com/in/srijith-rajamohan-ph-d-4242b9a/" aria-label="Srijith Rajamohan on LinkedIn">Srijith Rajamohan</a></li>
+          <li><a href="https://www.linkedin.com/in/honeyjainagarwal/" aria-label="Jen Agarwal on LinkedIn">Jen Agarwal</a></li>
+          <li><a href="https://www.linkedin.com/in/tyler-hutcherson/" aria-label="Tyler Hutcherson on LinkedIn">Tyler Hutcherson</a></li>
+          <li><a href="https://www.linkedin.com/in/simba-k/" aria-label="Simba Khadder on LinkedIn">Simba Khadder</a></li>
         </ul>
         <p class="affiliation">Redis</p>
         <nav class="resources" aria-label="Project resources">
           <a class="primary-resource" href="https://arxiv.org/abs/2610.26433">Read the paper <span aria-hidden="true">↗</span></a>
           <a href="https://github.com/ichko/agent-memory-geometry">Code &amp; data <span aria-hidden="true">↗</span></a>
           <a href="./atlas.html">Explore the Atlas <span aria-hidden="true">↗</span></a>
-          <!-- Replace this non-interactive label with a link when our poster is available. -->
-          <span class="pending-resource">Poster <small>to be added</small></span>
         </nav>
       </section>
 
@@ -45,19 +44,19 @@
       <section class="study-grid" id="study" aria-label="Study overview">
         <article>
           <h2><span>01</span> What we study</h2>
-          <p>We embed conversation turns, stored memory texts, and queries in a shared space. We measure query proximity, memory–conversation correspondence, and conversation structure.</p>
-          <p>A supervised classifier uses 25 features to predict answer correctness before generation. We evaluate four dense or hybrid retrieval implementations and one observation-summary comparator.</p>
+          <p>We embed conversation turns, memory texts, and queries with a shared analysis model. We measure query proximity, memory–conversation correspondence, and conversation structure.</p>
+          <p>We test 25 pre-answer features with a classifier trained on correctness labels. We evaluate four dense or hybrid retrieval implementations and one observation-summary comparator.</p>
         </article>
         <article>
           <h2><span>02</span> What we observe</h2>
-          <p>The associations vary by question type. On LongMemEval-small, geometry reaches <strong>0.640 AUROC</strong> across 2,367 question–system pairs, compared with <strong>0.655</strong> for a question-difficulty baseline.</p>
+          <p>In our offline LongMemEval-small evaluation, geometry reaches a modest <strong>0.640 AUROC</strong> across 2,367 question–system pairs. The question-difficulty baseline reaches <strong>0.655</strong>.</p>
           <p>Its strongest category score is 0.841 for single-session-assistant questions. System identity alone reaches 0.826 on the same category.</p>
         </article>
         <article>
           <h2><span>03</span> What the controls show</h2>
           <p>After controlling for question difficulty and system identity, geometry adds <strong>no statistically established pooled improvement</strong>.</p>
           <p class="estimate">ΔAUROC +0.002<br><span>95% CI [−0.010, 0.014]</span></p>
-          <p>Embedding proximity does not verify fact coverage or distinguish construction, retrieval, and generation errors.</p>
+          <p>This study does not establish a reliable live failure detector or identify why individual answers fail.</p>
         </article>
       </section>
 
@@ -65,8 +64,9 @@
         <div>
           <p class="eyebrow">An interactive companion</p>
           <h2 id="atlas-title">Memory Atlas</h2>
+          <p>This kind of visual exploration inspired the paper’s research questions.</p>
           <p>Follow conversations as paths, compare sampled memories with source turns, and inspect their original-space similarities. Switch between UMAP, t-SNE, PCA, and available 3D views.</p>
-          <p class="atlas-note">For exploration, not evidence of fact coverage. The full map loads only when you open the Atlas.</p>
+          <p class="atlas-note">The Atlas uses shared analysis embeddings, not the systems’ native retrieval vectors. Similarity links are not verified provenance or fact coverage.</p>
         </div>
         <a class="atlas-link" href="./atlas.html">Open the Atlas <span aria-hidden="true">↗</span></a>
       </section>
@@ -74,7 +74,7 @@
       <section class="citation-section" aria-labelledby="citation-title">
         <h2 id="citation-title">Citation</h2>
         <div>
-          <p>Iliya Zhechev et al. <i>The Geometry of Agent Memory: Forecasting Retrieval-Bound Memory Failures, and Characterizing Its Limits.</i> PALM Workshop at NeurIPS, 2026.</p>
+          <p>Zhechev et al. <i>The Geometry of Agent Memory.</i> PALM, NeurIPS 2026.</p>
           <details><summary>BibTeX</summary><pre>@misc{zhechev2026geometry,
   title = {The Geometry of Agent Memory: Forecasting
     Retrieval-Bound Memory Failures, and Characterizing Its Limits},
