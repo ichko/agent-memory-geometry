@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore real conversation paths and agent memories in embedding space.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Memory Atlas</title><link rel="stylesheet" href="./styles.css?v=15"><script type="module" src="./app.js?v=15"></script>
+</head><body>
+  <header><div class="identity"><a class="brand" href="./">Memory Atlas<span class="brand-dot"></span></a><span id="dataset-name">Real conversation paths</span></div><div class="header-actions"><button id="open-file">Open atlas</button><button id="about-button" aria-label="About this map">?</button></div><input id="file-input" type="file" accept=".json,application/json" hidden></header>
+  <main>
+    <div class="toolbar">
+      <div class="projection-toggle" role="group" aria-label="Projection"><button data-projection="umap" aria-pressed="true">UMAP</button><button data-projection="tsne" aria-pressed="false" disabled>t-SNE</button><button data-projection="pca" aria-pressed="false">PCA</button></div>
+      <div class="projection-toggle" role="group" aria-label="Dimensions"><button data-dimension="2" aria-pressed="true">2D</button><button data-dimension="3" aria-pressed="false" disabled>3D</button></div>
+      <div class="history-nav" role="group" aria-label="Browse histories"><label for="history-input">History</label><button id="previous-history" aria-label="Previous history">←</button><input id="history-input" type="number" min="1" step="1" placeholder="All" aria-label="History number"><span id="history-total"></span><button id="next-history" aria-label="Next history">→</button><button id="random-history">Random</button><button id="all-histories" aria-pressed="true">All</button></div>
+      <select id="memory-select" aria-label="Memory overlay"><option value="">Memories off</option></select>
+      <input id="search-input" type="search" placeholder="Find a conversation…" aria-label="Find a conversation"><button id="inspect-memory" aria-pressed="false">Inspect memories</button><button id="reset-view" title="Show the full map">Reset view</button>
+    </div>
+    <nav id="examples" aria-label="Guided examples and projection settings" hidden><span id="examples-label">Look closer</span><div id="example-buttons"></div><button id="exit-example" title="Exit the example and restore the previous view" hidden>Clear ×</button><div id="tsne-settings" role="group" aria-label="t-SNE layout" hidden><span>t-SNE fit</span><div id="tsne-buttons"></div></div></nav>
+    <section id="map" aria-label="Conversation map">
+      <canvas id="grid-canvas" aria-hidden="true"></canvas>
+      <div id="conversation-layer" aria-hidden="true"><canvas id="point-canvas"></canvas><canvas id="path-canvas"></canvas><canvas id="spatial-path-canvas" hidden></canvas></div>
+      <canvas id="memory-canvas" aria-hidden="true"></canvas>
+      <canvas id="atlas-canvas" tabindex="0" aria-label="Conversation paths. Scroll to zoom, drag to pan, and select a turn to read its conversation."></canvas>
+      <div class="map-layers">
+        <div class="legend" aria-label="Map legend"><span><i class="turn-key"></i>Conversation turns</span><span id="memory-key" class="inactive"><i class="memory-key"></i><span id="memory-layer-label">Memories off</span></span><span id="query-key" hidden><i class="query-key"></i>Question</span><label id="depth-control" hidden title="Stronger points in front, fainter points behind. A camera-depth cue, not a relevance score."><input id="depth-shading" type="checkbox" checked>Depth shading</label></div>
+        <details id="layer-settings"><summary>Size</summary><div class="layer-panel"><label for="marker-size">Marker area <output id="marker-size-value">5 pt²</output></label><input id="marker-size" type="range" min="1" max="20" step="0.5" value="5"><p>Small, borderless scatter markers. Click targets are larger than the dots.</p></div></details>
+        <div class="opacity-controls" role="group" aria-label="Marker opacity"><label class="auto-opacity" for="auto-opacity" title="Adapt individual markers to local on-screen density, including zoom, pan, and filtering."><input id="auto-opacity" type="checkbox" checked>Auto</label><label for="cloud-opacity">Conversations<input id="cloud-opacity" type="range" min="0" max="100" step="1" value="90" aria-label="Conversation opacity" disabled><output id="cloud-opacity-value">≈90%</output></label><label for="memory-opacity">Memories<input id="memory-opacity" type="range" min="0" max="100" step="1" value="95" aria-label="Memory opacity" disabled><output id="memory-opacity-value">≈95%</output></label></div>
+      </div>
+      <div id="loading" role="status"><span class="loading-dot"></span><h1>Preparing real conversations</h1><p id="loading-detail">Loading the atlas…</p></div>
+      <div id="tooltip" hidden></div>
+      <aside id="example-bubble" aria-label="Guided example" hidden><div class="example-heading"><span>GUIDED EXAMPLE</span><button id="refocus-example" aria-label="Recenter example" title="Recenter example">↺</button><button id="close-example" aria-label="Exit guided example">×</button></div><h2 id="example-title"></h2><p id="example-description"></p><div id="example-evidence"></div><p id="example-caveat"></p></aside>
+      <div id="map-caption"><span id="counts"></span><span id="interaction-hint" class="interaction-hint">Click to read · Click empty space to clear · Scroll to zoom · Drag to pan</span></div>
+      <div class="zoom-controls"><button id="zoom-out" aria-label="Zoom out">−</button><output id="zoom-level">100%</output><button id="zoom-in" aria-label="Zoom in">+</button></div>
+      <aside id="reader" aria-label="Selected conversation" hidden><div class="reader-heading"><span id="reader-kind">CONVERSATION</span><button id="close-reader" aria-label="Close selected conversation">×</button></div><h2 id="reader-title"></h2><p id="reader-meta"></p><div id="reader-turns"></div><div class="reader-actions"><button id="focus-path">Focus this path</button><button id="previous-turn" aria-label="Previous turn">←</button><button id="next-turn" aria-label="Next turn">→</button></div></aside>
+      <aside id="inspection" aria-label="Source and memory inspection" hidden></aside>
+    </section>
+    <footer><span id="model-label"></span><span id="projection-note">Lines connect consecutive turns within each conversation.</span></footer>
+  </main>
+  <dialog id="about-dialog"><div class="dialog-heading"><h2>About this map</h2><button id="close-about" aria-label="Close help">×</button></div><p>Each path is one real conversation session. Lines follow turn order. Separate sessions are never joined.</p><p id="model-detail"></p><p id="projection-detail"></p><p id="memory-detail"></p><p>Projection is for exploration. Nearby points are not proof that a fact was stored or retrieved. Memory overlays use shared analysis embeddings, not native retrieval vectors.</p><p>Files opened manually stay in your browser tab and are not uploaded. This viewer makes no embedding API calls.</p><p><a href="./data-notice.html">Benchmark data attribution and display redactions</a></p><a href="https://arxiv.org/abs/2610.26433" target="_blank" rel="noopener noreferrer">Read the paper ↗</a></dialog>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+</body></html>
