@@ -1,4 +1,4 @@
-:root { font-family: "DejaVu Sans", Arial, sans-serif; color: #262626; background: #fff; font-size: 13px; }
+:root { font-family: "DejaVu Sans", Arial, sans-serif; color: #231f1c; background: #faf8f5; font-size: 13px; }
 * { box-sizing: border-box; }
 body { margin: 0; height: 100dvh; overflow: hidden; }
 button, input, select { font: inherit; color: inherit; }
@@ -8,16 +8,18 @@ button:hover { background: #f2f2f2; }
 button:disabled { opacity: .4; cursor: default; }
 :focus-visible { outline: 2px solid #1f77b4; outline-offset: 3px; }
 [hidden] { display: none !important; }
-header { height: 66px; display: flex; align-items: center; justify-content: space-between; padding: 0 25px; background: #fff; border-bottom: 1px solid #ddd; }
+header { height: 66px; display: flex; align-items: center; justify-content: space-between; padding: 0 25px; background: #faf8f5; border-bottom: 2px solid #231f1c; }
 .identity { display: flex; align-items: center; gap: 23px; min-width: 0; }
-.brand { text-decoration: none; color: #262626; font-size: 20px; letter-spacing: -.7px; font-weight: 650; display: flex; align-items: center; white-space: nowrap; gap: 9px; }
-.brand-dot { width: 6px; height: 6px; border-radius: 50%; background: #1f77b4; }
+.brand { text-decoration: none; color: #231f1c; font: 26px Georgia, "Times New Roman", serif; letter-spacing: -.8px; display: flex; align-items: center; white-space: nowrap; gap: 9px; }
+.brand-dot { width: 6px; height: 6px; border-radius: 50%; background: #b51e2b; }
 #dataset-name { font-size: 11px; color: #78837a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.header-actions { display: flex; gap: 9px; }
+.header-actions { display: flex; align-items: center; gap: 9px; }
+.paper-link { color: #69615b; font-size: 11px; text-decoration: none; margin-right: 11px; white-space: nowrap; }
+.paper-link:hover { color: #b51e2b; text-decoration: underline; text-underline-offset: 4px; }
 .header-actions button { font-size: 11px; }
 #about-button { width: 32px; padding: 5px; border-radius: 50%; }
 main { height: calc(100dvh - 66px); display: flex; flex-direction: column; }
-.toolbar { display: flex; align-items: center; gap: 12px; padding: 13px 24px; border-bottom: 1px solid #ddd; background: #fff; }
+.toolbar { display: flex; align-items: center; gap: 12px; padding: 13px 24px; border-bottom: 1px solid #d8d1c9; background: #faf8f5; }
 .projection-toggle { display: flex; border: 1px solid #d6ded3; border-radius: 5px; padding: 3px; gap: 2px; }
 .projection-toggle button { border: 0; border-radius: 3px; font-size: 11px; padding: 7px 11px; }
 .projection-toggle button[aria-pressed="true"] { background: #333; color: #fff; }
@@ -34,7 +36,7 @@ select, input[type="search"] { background: #fff; border: 1px solid #d5d5d5; bord
 #reset-view { font-size: 11px; white-space: nowrap; }
 #inspect-memory { font-size: 11px; white-space: nowrap; }
 #inspect-memory[aria-pressed="true"] { background: #f0f6fb; border-color: #1f77b4; }
-#examples { display: flex; align-items: center; gap: 12px; padding: 8px 24px; border-bottom: 1px solid #e5e5e5; flex-shrink: 0; }
+#examples { display: flex; align-items: center; gap: 12px; padding: 8px 24px; border-bottom: 1px solid #d8d1c9; background: #faf8f5; flex-shrink: 0; }
 #examples > span { font-size: 10px; color: #777; white-space: nowrap; }
 #example-buttons { display: flex; gap: 7px; overflow-x: auto; min-width: 0; }
 #example-buttons button { font-size: 11px; padding: 7px 10px; white-space: nowrap; }

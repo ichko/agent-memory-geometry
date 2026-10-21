@@ -17,6 +17,11 @@
       "sha256": "ff194fc10e702cc28250a326789246923a637e09ab498b5b3764c179cde7552d"
     },
     {
+      "path": "atlas.html",
+      "bytes": 7713,
+      "sha256": "225ca252e1251789849391e89a52c8bf854f8f766ec11a4f2787275457921174"
+    },
+    {
       "path": "atlas.json",
       "bytes": 956,
       "sha256": "62c731066ebb0db0d56c16fe3e5d4204badea6e7e30358089f56675958aec4d8"
@@ -25,6 +30,11 @@
       "path": "atlas.mjs",
       "bytes": 7311,
       "sha256": "558cf725b765de98df7945bf2d8aa0979c585807c272ca2fb941a02a281f7ce5"
+    },
+    {
+      "path": "correspondence.mjs",
+      "bytes": 3431,
+      "sha256": "c008f856b33ed8ac53946b5b300202c012e609a4dcc61d1df47c527be1290379"
     },
     {
       "path": "correspondence/h1.json.gz",
@@ -2527,9 +2537,14 @@
       "sha256": "ab467df9d7e3813337edef4667982f38bd44d0a1048b2116e515ac43c1dbfd71"
     },
     {
-      "path": "correspondence.mjs",
-      "bytes": 3431,
-      "sha256": "c008f856b33ed8ac53946b5b300202c012e609a4dcc61d1df47c527be1290379"
+      "path": "data-loader.mjs",
+      "bytes": 2038,
+      "sha256": "3f1621dc936f873a16d02542082696f92da2613d385fe6082048c28615bedaca"
+    },
+    {
+      "path": "data-notice.html",
+      "bytes": 2527,
+      "sha256": "6f04f74dba43e1dc3eb6f2b46060a11c6e182ed011bfa5a3ecb2b39bd858c0f4"
     },
     {
       "path": "data/metadata.json.gz",
@@ -2672,29 +2687,24 @@
       "sha256": "439b1b16212cf1eced05c147701e51a047a524c3d1aa4208c56b5f679da14d09"
     },
     {
-      "path": "data-loader.mjs",
-      "bytes": 2038,
-      "sha256": "3f1621dc936f873a16d02542082696f92da2613d385fe6082048c28615bedaca"
-    },
-    {
-      "path": "data-notice.html",
-      "bytes": 2486,
-      "sha256": "0496179b1a735e0745ca3f0c237ad3c5f04a6448d4a03cfdfedefb8b674f286e"
-    },
-    {
       "path": "examples.mjs",
       "bytes": 3642,
       "sha256": "c1629d25fce49b71eabf3b45e99178a97cb04330ac1a70847eed269e4292f7ee"
     },
     {
       "path": "index.html",
-      "bytes": 7626,
-      "sha256": "d459ce80e481198f0778d71d2c83fdcabd12d9cb1c2fea7f4ea86292f26a9f06"
+      "bytes": 5982,
+      "sha256": "fe658725295e0391137aa29c89139d8c9961772ffca22190c18ddda0e3bb2085"
     },
     {
       "path": "inspector.mjs",
       "bytes": 15333,
       "sha256": "c5f7bde1db7c07a139c3929366b8698942e3c33a3372c3122ed4bac96a1c3b94"
+    },
+    {
+      "path": "landing.css",
+      "bytes": 6184,
+      "sha256": "82967a3d7bd8a5c4f14f1fe493ea1dba006fc790a516e11de6ef6705332644f0"
     },
     {
       "path": "navigation.mjs",
@@ -2718,8 +2728,8 @@
     },
     {
       "path": "styles.css",
-      "bytes": 16621,
-      "sha256": "bfb0f562323677ba2f27a9c598e199716121bd0e8c68bc7edff88284dae7ad7b"
+      "bytes": 16896,
+      "sha256": "9aa418231a50b395cf5adcee9f846dff9e64a4ad8de2e8d5f268ffd81230ea6a"
     }
   ]
 }
