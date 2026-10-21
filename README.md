@@ -8,7 +8,7 @@ Iliya Zhechev, Radoslav Ralev, Chris Coleman, Srijith Rajamohan, Jen Agarwal, Ty
 
 Accepted as a poster at PALM, NeurIPS 2026.
 
-[arXiv](https://arxiv.org/abs/2610.26433) · [Paper and reviews](https://openreview.net/forum?id=xP0xvmQZhB) · [Paper PDF](paper/geometry_of_agent_memory.pdf) · [Protocol](docs/protocol.md)
+[arXiv](https://arxiv.org/abs/2610.26433) · [Paper and reviews](https://openreview.net/forum?id=xP0xvmQZhB) · [Paper PDF](paper/geometry_of_agent_memory.pdf) · [Live demo](https://www.izhv.eu/agent-memory-geometry/) · [Protocol](docs/protocol.md)
 
 ## What this study shows
 
@@ -21,6 +21,8 @@ Performance varies by question type. The strongest category result also has a st
 These results characterize the evaluated representations. They do not establish a reliable deployment diagnostic or verify why individual answers fail.
 
 ## Memory Atlas explorer
+
+[Open the live demo](https://www.izhv.eu/agent-memory-geometry/).
 
 The static explorer under `site/` shows real conversation sessions as chronological paths in a shared embedding map.
 UMAP is the default. Optional t-SNE and PCA provide comparison views. Toggle 2D/3D when real three-axis layouts are present; t-SNE is 2D only.
