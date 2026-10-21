@@ -14,6 +14,18 @@ from tools.build_landing_preview import build_preview_data, render_preview
 
 
 class DemoPackageTests(unittest.TestCase):
+    def test_all_pages_share_a_local_theme_colored_redis_favicon(self):
+        site = Path(__file__).resolve().parents[1] / "site"
+        svg = ET.fromstring((site / "favicon.svg").read_text())
+        ns = {"svg": "http://www.w3.org/2000/svg"}
+        self.assertEqual(svg.attrib["viewBox"], "0 0 32 32")
+        self.assertEqual(svg.find("svg:title", ns).text, "Redis")
+        self.assertEqual(svg.find("svg:path", ns).attrib["fill"], "#b51e2b")
+        self.assertEqual(svg.find("svg:rect", ns).attrib["fill"], "#faf8f5")
+        self.assertFalse(svg.findall(".//svg:script", ns))
+        for name in ("index.html", "atlas.html", "data-notice.html"):
+            self.assertIn('<link rel="icon" type="image/svg+xml" href="./favicon.svg?v=1">', (site / name).read_text())
+
     def test_landing_graphic_uses_an_accessible_button_free_measured_preview(self):
         site = Path(__file__).resolve().parents[1] / "site"
         page = (site / "index.html").read_text()

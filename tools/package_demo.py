@@ -83,7 +83,7 @@ def package(atlas_path: Path, dataset_path: Path, output: Path, chunk_size: int 
     }
     output.mkdir(parents=True, exist_ok=True)
     for source in (ROOT / "site").iterdir():
-        if source.is_file() and (source.suffix in {".html", ".css", ".js", ".mjs"} or source.name == "atlas-preview.svg"):
+        if source.is_file() and (source.suffix in {".html", ".css", ".js", ".mjs"} or source.name in {"atlas-preview.svg", "favicon.svg"}):
             shutil.copyfile(source, output / source.name)
     (output / ".nojekyll").write_text("")
     points = atlas.pop("points")
