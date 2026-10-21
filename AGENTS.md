@@ -12,6 +12,9 @@ The optional `explorer` extra provides local Sentence Transformers and UMAP prep
 It also includes openTSNE. Add a shared real 2D t-SNE fit with `uv run python tools/build_atlas.py --output outputs/atlas --add-tsne`.
 Add original-space cosine matrices with `uv run python tools/build_atlas.py --output outputs/atlas --correspondence`.
 The matrices are lazy-loaded per history from ignored `outputs/atlas/correspondence/`; never publish them automatically.
+The user-approved public site lives on the standalone `demo` branch, published from its root. Source stays on `main`.
+Build reviewed public data with `tools/package_demo.py --approve-public-data` into an empty ignored output directory.
+It verifies public-source turns, redacts credential-shaped display examples, preserves coordinates/scores, and exports gzip blocks plus a checksum manifest. Do not copy vectors, caches, or private run files to `demo`.
 Memory-to-turn links and heatmap colors must use these original-space scores, never projected distances. Call them candidate matches, not verified provenance or fact coverage.
 Add real 3D layouts to an existing local atlas with `uv run python tools/build_atlas.py --output outputs/atlas --add-3d`.
 This reuses cached vectors and must preserve the existing 2D coordinates. Never invent a depth axis.

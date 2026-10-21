@@ -7,6 +7,30 @@ import { guidedExamples } from "../site/examples.mjs";
 import { buildPathIndex, nearestPath } from "../site/paths.mjs";
 import { historyRows, validateCorrespondence, nearestSourceTurns, bestMemoryColumn, heatmapColor, heatmapCell } from "../site/correspondence.mjs";
 import { IDENTITY_ROTATION, orbitRotation, rotatedXY, createSpatialPaths, coordinateMoments, depthCueForView, depthWeight } from "../site/spatial.mjs";
+import { fetchDataJson, unpackAtlas } from "../site/data-loader.mjs";
+import { gzipSync } from "node:zlib";
+
+test("static demo packs preserve point order, gzip scores, and plain local atlases", async () => {
+  const plain = { schemaVersion: 2, points: [1] };
+  assert.equal(await unpackAtlas(plain), plain);
+  const files = { "./data/meta.json.gz": { schemaVersion: 2 }, "./data/one.json.gz": [{ text: "first" }], "./data/two.json.gz": [{ text: "second" }], "./correspondence/h1.json.gz": { scores: [.75] } };
+  const fetcher = async path => new Response(gzipSync(JSON.stringify(files[path])), { status: 200 });
+  const progress = [];
+  const loaded = await unpackAtlas({ format: "memory-atlas-pack-v1", metadata: "data/meta.json.gz", parts: ["data/one.json.gz", "data/two.json.gz"], pointCount: 2 }, (done, total) => progress.push([done, total]), fetcher);
+  assert.deepEqual(loaded.points.map(p => p.text), ["first", "second"]);
+  assert.deepEqual(progress, [[2, 2]]);
+  assert.deepEqual(await fetchDataJson("correspondence/h1.json.gz", fetcher), { scores: [.75] });
+  assert.deepEqual(await fetchDataJson("data/plain.json", async () => new Response('{"plain":true}')), { plain: true });
+  assert.deepEqual(await fetchDataJson("data/decoded.json.gz", async () => new Response('{"decoded":true}', { headers: { "content-encoding": "gzip" } })), { decoded: true });
+});
+
+test("static data loading rejects external paths, missing blocks, and point-count mismatch", async () => {
+  for (const path of ["https://example.org/a.json", "../a.json", "data/../../a.json", "/a.json", "//example.org/a.json"]) await assert.rejects(fetchDataJson(path), /Invalid demo data path/);
+  await assert.rejects(fetchDataJson("missing.json", async () => new Response("", { status: 404 })), /404/);
+  const manifest = { format: "memory-atlas-pack-v1", metadata: "data/meta.json", parts: ["data/one.json"], pointCount: 2 };
+  await assert.rejects(unpackAtlas(manifest, () => {}, async path => new Response(JSON.stringify(path.includes("meta") ? {} : [{ text: "one" }]))), /incomplete/);
+  await assert.rejects(unpackAtlas({ ...manifest, parts: [] }), /Invalid demo data manifest/);
+});
 
 // Minimal numeric fixtures test the viewer. They are never served as a demo.
 test("markers use Matplotlib's default categorical colors", () => {

@@ -3,7 +3,7 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Explore real conversation paths and agent memories in embedding space.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <title>Memory Atlas</title><link rel="stylesheet" href="./styles.css?v=14"><script type="module" src="./app.js?v=14"></script>
+  <title>Memory Atlas</title><link rel="stylesheet" href="./styles.css?v=15"><script type="module" src="./app.js?v=15"></script>
 </head><body>
   <header><div class="identity"><a class="brand" href="./">Memory Atlas<span class="brand-dot"></span></a><span id="dataset-name">Real conversation paths</span></div><div class="header-actions"><button id="open-file">Open atlas</button><button id="about-button" aria-label="About this map">?</button></div><input id="file-input" type="file" accept=".json,application/json" hidden></header>
   <main>
@@ -35,6 +35,6 @@
     </section>
     <footer><span id="model-label"></span><span id="projection-note">Lines connect consecutive turns within each conversation.</span></footer>
   </main>
-  <dialog id="about-dialog"><div class="dialog-heading"><h2>About this map</h2><button id="close-about" aria-label="Close help">×</button></div><p>Each path is one real conversation session. Lines follow turn order. Separate sessions are never joined.</p><p id="model-detail"></p><p id="projection-detail"></p><p id="memory-detail"></p><p>Projection is for exploration. Nearby points are not proof that a fact was stored or retrieved. Memory overlays use shared analysis embeddings, not native retrieval vectors.</p><p>Local exports stay on this machine. This viewer makes no embedding API calls.</p><a href="https://arxiv.org/abs/2610.26433" target="_blank" rel="noopener noreferrer">Read the paper ↗</a></dialog>
+  <dialog id="about-dialog"><div class="dialog-heading"><h2>About this map</h2><button id="close-about" aria-label="Close help">×</button></div><p>Each path is one real conversation session. Lines follow turn order. Separate sessions are never joined.</p><p id="model-detail"></p><p id="projection-detail"></p><p id="memory-detail"></p><p>Projection is for exploration. Nearby points are not proof that a fact was stored or retrieved. Memory overlays use shared analysis embeddings, not native retrieval vectors.</p><p>Files opened manually stay in your browser tab and are not uploaded. This viewer makes no embedding API calls.</p><p><a href="./data-notice.html">Benchmark data attribution and display redactions</a></p><a href="https://arxiv.org/abs/2610.26433" target="_blank" rel="noopener noreferrer">Read the paper ↗</a></dialog>
   <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
 </body></html>

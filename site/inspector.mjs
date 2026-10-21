@@ -1,4 +1,5 @@
 import { validateCorrespondence, nearestSourceTurns, bestMemoryColumn, heatmapColor, heatmapCell } from "./correspondence.mjs";
+import { fetchDataJson } from "./data-loader.mjs";
 
 export function createMemoryInspector(root, callbacks) {
   const make = (tag, text = "", className = "") => { const node = document.createElement(tag); node.textContent = text; if (className) node.className = className; return node; };
@@ -68,9 +69,8 @@ export function createMemoryInspector(root, callbacks) {
       let loaded = cache.get(next.history);
       if (!loaded) {
         if (next.localFile) throw new Error("Open this history's similarity JSON from the atlas correspondence folder. Local files are not uploaded.");
-        const response = await fetch(`./correspondence/h${next.history + 1}.json`, { cache: "no-store" });
-        if (!response.ok) throw new Error("Similarities are unavailable. Run the atlas builder with --correspondence, or open the matching history JSON.");
-        loaded = validateCorrespondence(await response.json(), data, next.history);
+        const path = (data.correspondence.files || "correspondence/h{history}.json").replace("{history}", next.history + 1);
+        loaded = validateCorrespondence(await fetchDataJson(path), data, next.history);
         cache.set(next.history, loaded);
         if (cache.size > 4) cache.delete(cache.keys().next().value);
       }

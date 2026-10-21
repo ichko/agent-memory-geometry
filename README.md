@@ -39,10 +39,11 @@ The viewer contains no synthetic fallback and makes no embedding API calls.
 Raw text, embeddings, and generated atlas files stay under ignored `outputs/`, outside the publishable site directory.
 See [docs/explorer.md](docs/explorer.md) to build an atlas from your own local benchmark files.
 
-To host the viewer on GitHub Pages, select **Settings → Pages → Source → GitHub Actions**,
-then run **Actions → Publish Memory Atlas → Run workflow** on `main`.
-The workflow publishes `site/` only. Without a separately published atlas, visitors must use **Open atlas**
-to load their own JSON; the local preview dataset is not bundled automatically.
+The [`demo` branch](https://github.com/ichko/agent-memory-geometry/tree/demo) contains the standalone public demo,
+including all benchmark conversations, sampled memories, precomputed layouts, and original-space similarities.
+To serve it, select **Settings → Pages → Deploy from a branch → demo → /(root)**.
+Credential-shaped examples and local paths are masked in displayed text; plotted coordinates and similarity scores are unchanged.
+Code and build tools remain on `main`; vectors, caches, backend configurations, and generated answers are not published.
 
 ## Reproduce the analysis
 
@@ -102,7 +103,7 @@ This is an **offline analysis release**, not the original multi-backend benchmar
 It includes feature computation, evaluation, numerical results, paper sources, and published figures.
 
 It excludes backend integrations, backend deployment tooling, raw benchmark conversations, memory text, generated answers, embedding caches, credentials, and the source repository's history.
-The explorer's optional deployment workflow publishes only the static viewer, not local atlas data or a backend.
+The separate `demo` branch is an explicitly approved exception: it contains the public benchmark visualization data, not a backend.
 The tables retain correctness labels and derived numerical features. Question IDs use consistent anonymous identifiers.
 
 Reproducing memory construction, answer generation, or judging requires separate implementations and the original benchmark data.

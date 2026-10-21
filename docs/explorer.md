@@ -92,7 +92,7 @@ to select the matching history JSON. It stays in the tab and is not uploaded. Mi
 The **Look closer** buttons resolve three text-checked cases from a compatible loaded atlas:
 a sampled summary that omits a number, different mileage values in separate sessions,
 and a stored assistant recommendation. Cases are hidden when their required evidence is not present.
-No source conversations are bundled with the static viewer.
+The source viewer on `main` contains no bundled conversations. The separate public `demo` branch includes the approved benchmark export.
 
 Click a preset to select its history and overlay, animate the camera, highlight its conversation paths,
 and show a short explanation. Numbered rings link the map to source and memory excerpts in the bubble.
@@ -246,15 +246,33 @@ uv run python -m unittest discover -s tests -v
 uv run python tools/check_release.py
 ```
 
-Keep atlas JSON, source text, vectors, caches, and screenshots under ignored `outputs/`.
-Do not publish these artifacts without a separate content and data-permissions review.
-The manual GitHub Pages workflow uploads only `site/`. No data is published automatically.
-For a static deployment, users can open a separately prepared atlas JSON.
-Distributing a default public atlas is a separate publication step.
+Keep local atlas JSON, source text, vectors, caches, and screenshots under ignored `outputs/`.
+Publishing a default dataset requires explicit approval and a separate content/data-permissions review.
+The approved public export lives on the separate `demo` branch, with the viewer at its root.
+Enable it under **Settings → Pages → Deploy from a branch → demo → /(root)**.
+The expected URL is `https://ichko.github.io/agent-memory-geometry/` after deployment succeeds.
+The localhost server is not used by Pages. The manual Actions workflow is an alternative for a viewer-only deployment from `main`.
 
-To publish the viewer, open the repository's **Settings → Pages**, choose **GitHub Actions** as the source,
-then open **Actions → Publish Memory Atlas → Run workflow** and select `main`.
-The workflow tests the JavaScript and uploads only `site/`. It does not enable Pages or run automatically on push.
-The expected project URL is `https://ichko.github.io/agent-memory-geometry/` once deployment succeeds.
-Without a separately hosted `atlas.json` and matching `correspondence/` sidecars, the hosted viewer requires
-**Open atlas** and **Open similarities**. The localhost preview server is not part of the deployment.
+Rebuild a reviewed static export in a new, empty directory:
+
+```sh
+uv run python tools/package_demo.py \
+  --atlas outputs/atlas/atlas.json \
+  --dataset /absolute/path/to/longmemeval_s_cleaned.json \
+  --output outputs/demo-build \
+  --approve-public-data
+```
+
+The packager verifies that conversation texts and questions match the supplied public benchmark,
+rejects private-source markers, and masks credential-shaped examples and local paths in display text.
+This is a bounded review aid, not a guarantee against every possible sensitive string.
+Point IDs, all projection coordinates, memory sample counts, and cosine scores are preserved.
+The display-text fingerprint and matching sidecars are updated together; embeddings are not recomputed.
+The public metadata and attribution page disclose that redaction occurs after embedding.
+
+`atlas.json` is a small manifest pointing to compressed metadata and ordered point blocks.
+Native browser gzip decompression loads these without external libraries; blocks stay below 25 MiB.
+Original-space similarities remain lazy-loaded per history as compressed JSON.
+`publication-manifest.json` records file sizes/checksums, counts, and the public source file checksum.
+Neither caches, original vectors, model weights, raw run logs, generated answers, nor backend credentials are copied.
+After packaging, publish only the generated static directory to `demo`, preserving the `main` source history.

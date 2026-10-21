@@ -4,6 +4,7 @@ import { createPointRenderer, ATLAS_COLORS, PLOT_STYLE, markerStyle, markerHitRa
 import { guidedExamples } from "./examples.mjs";
 import { buildPathIndex, nearestPath } from "./paths.mjs";
 import { createMemoryInspector } from "./inspector.mjs";
+import { unpackAtlas } from "./data-loader.mjs";
 import { createSpatialPaths, IDENTITY_ROTATION, orbitRotation, rotatedXY, coordinateMoments, depthCueForView } from "./spatial.mjs";
 
 const $ = id => document.getElementById(id);
@@ -66,7 +67,13 @@ async function pollDataset() {
   if (openedLocalFile) return;
   try {
     const response = await fetch("./atlas.json", { cache: "no-store" });
-    if (response.ok) { loadAtlas(await response.json()); return; }
+    if (response.ok) {
+      const data = await unpackAtlas(await response.json(), (loaded, total) => {
+        $("loading-detail").textContent = `Loading public benchmark map: ${Math.round(100 * loaded / total)}%`;
+      });
+      if (!openedLocalFile) loadAtlas(data);
+      return;
+    }
     if (response.status !== 404) throw new Error(`Could not read atlas (${response.status}).`);
     const status = await fetch("./build-status.json", { cache: "no-store" });
     if (status.ok) {
