@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { runInNewContext } from "node:vm";
 import { validateAtlas, projectionCoordinates, visibleSessions, memoryPoints, gridLines, gridMarks, stepHistory, randomHistory } from "../site/atlas.mjs";
 import { wheelZoomFactor, zoomViewport, fitPoints } from "../site/navigation.mjs";
 import { markerStyle, createPointRenderer, ATLAS_COLORS, PLOT_STYLE, markerHitRadius, pathOpacity, contextPathWidth, densityOpacityMap, densityOpacityAt } from "../site/points.mjs";
@@ -9,6 +11,159 @@ import { historyRows, validateCorrespondence, nearestSourceTurns, bestMemoryColu
 import { IDENTITY_ROTATION, orbitRotation, rotatedXY, createSpatialPaths, coordinateMoments, depthCueForView, depthWeight } from "../site/spatial.mjs";
 import { fetchDataJson, unpackAtlas } from "../site/data-loader.mjs";
 import { gzipSync } from "node:zlib";
+import { preparePreview, previewProjection, previewDrag, previewShouldAnimate, previewAutoZoom, previewMemoryHighlight, previewFrontMemory, previewBubblePosition, previewAutoOrbit } from "../site/preview.mjs";
+import { PREVIEW } from "../site/preview-data.mjs";
+
+function bootLandingPreview({ reduced = false, hidden = false } = {}) {
+  const events = new Map(), frames = new Map(), attributes = new Map();
+  let nextFrame = 0, draws = 0;
+  const ctx = new Proxy({ clearRect() { draws++; } }, { get(target, key) { return target[key] ?? (() => {}); } });
+  const text = { textContent: "" }, bubble = { hidden: true, dataset: {}, style: {}, offsetHeight: 120, offsetWidth: 230, querySelector: () => text };
+  const canvas = { hidden: true, getContext: () => ctx, setAttribute: (key, value) => attributes.set(key, value),
+    addEventListener: (type, handler) => events.set(type, handler), classList: { add() {}, remove() {} }, focus() {}, setPointerCapture() {} };
+  const stage = { getBoundingClientRect: () => ({ left: 650, width: 600, height: 410, top: -20, bottom: 390 }) };
+  const elements = { ".preview-stage": stage, "#hero-canvas": canvas, "#preview-memory": bubble, "#preview-fallback": { hidden: false } };
+  const document = { hidden, documentElement: { clientWidth: 1280 }, querySelectorAll: () => [], querySelector: selector => elements[selector], addEventListener: (type, handler) => events.set(type, handler) };
+  const observer = class { observe() {} };
+  const source = readFileSync(new URL("../site/landing-preview.js", import.meta.url), "utf8").replace(/^import .*;\n/gm, "");
+  runInNewContext(source, { PREVIEW, preparePreview, previewProjection, previewDrag, previewShouldAnimate, previewAutoZoom,
+    previewMemoryHighlight, previewFrontMemory, previewBubblePosition, previewAutoOrbit, document, innerHeight: 800, devicePixelRatio: 1,
+    matchMedia: () => ({ matches: reduced, addEventListener() {} }), ResizeObserver: observer, IntersectionObserver: observer,
+    requestAnimationFrame: callback => { frames.set(++nextFrame, callback); return nextFrame; }, cancelAnimationFrame: id => frames.delete(id) });
+  return { bubble, text, canvas, attributes, frames, document,
+    event: (type, event = {}) => events.get(type)(event), draws: () => draws,
+    step: time => { const callbacks = [...frames.values()]; frames.clear(); callbacks.forEach(callback => callback(time)); } };
+}
+
+test("landing boot starts animation and a readable bubble without hover or observer callbacks", () => {
+  const page = bootLandingPreview();
+  assert.ok(page.frames.size > 0);
+  assert.equal(page.canvas.hidden, false);
+  assert.equal(page.bubble.hidden, false);
+  assert.ok(page.text.textContent.length > 0);
+  assert.equal(Number(page.bubble.style.opacity), 1);
+  const initial = page.draws();
+  page.step(100); page.step(140);
+  assert.ok(page.draws() > initial);
+  page.event("pointerenter");
+  assert.equal(page.frames.size, 0);
+  assert.match(page.attributes.get("aria-label"), /Rotation paused/);
+  page.event("pointerleave");
+  assert.ok(page.frames.size > 0);
+  page.event("keydown", { key: " ", preventDefault() {} });
+  page.event("pointerleave");
+  assert.equal(page.frames.size, 0, "Leaving must not undo an explicit Space pause");
+});
+
+test("memory callouts clear the highlighted point and may extend outside the canvas", () => {
+  const bounds = { left: -500, top: 20, right: 620, bottom: 700 };
+  for (const point of [[30, 30], [300, 200], [570, 200], [300, 380]]) {
+    const p = previewBubblePosition(point, 230, 100, bounds);
+    assert.ok(p.x + 230 <= point[0] - 24 || p.x >= point[0] + 24 || p.y + 100 <= point[1] - 24 || p.y >= point[1] + 24);
+    assert.ok(p.x >= bounds.left && p.x + 230 <= bounds.right);
+    assert.ok(p.y >= bounds.top && p.y + 100 <= bounds.bottom);
+  }
+  const blocked = [{ left: -500, right: 620, top: 100, bottom: 400 }];
+  const outside = previewBubblePosition([300, 380], 230, 100, bounds, blocked);
+  assert.equal(outside.y, 404, "The bubble may extend below the 410px canvas instead of covering content");
+  const above = previewBubblePosition([200, 50], 230, 100, { left: 0, top: -150, right: 400, bottom: 410 }, [{ left: 0, right: 400, top: 74, bottom: 300 }]);
+  assert.equal(above.y, -74);
+});
+
+test("automatic rotation adds a smooth second axis without changing yaw speed", () => {
+  let yaw = 0, pitch = 0, peak = 0;
+  for (let t = 0; t < 48000; t += 40) {
+    const delta = previewAutoOrbit(t, 40); yaw += delta.yaw; pitch += delta.pitch; peak = Math.max(peak, Math.abs(pitch));
+  }
+  assert.ok(Math.abs(yaw - 48000 * .00012) < 1e-10);
+  assert.ok(Math.abs(pitch) < 1e-10);
+  assert.ok(peak > .31 && peak <= .32000001);
+});
+
+test("a memory bubble is visible even with reduced motion or a background-tab launch", () => {
+  const reduced = bootLandingPreview({ reduced: true });
+  assert.equal(reduced.frames.size, 0);
+  assert.equal(reduced.bubble.hidden, false);
+  assert.equal(Number(reduced.bubble.style.opacity), 1);
+  const background = bootLandingPreview({ hidden: true });
+  assert.equal(background.frames.size, 0);
+  assert.equal(Number(background.bubble.style.opacity), 1);
+  background.document.hidden = false;
+  background.event("visibilitychange");
+  assert.ok(background.frames.size > 0);
+});
+
+test("landing preview includes the larger measured point sample", () => {
+  assert.equal(PREVIEW.turns.length, 6000);
+  assert.equal(PREVIEW.memories.length, 400);
+  assert.equal(new Set(PREVIEW.turns).size, 6000);
+  assert.equal(new Set(PREVIEW.memories).size, 400);
+  assert.equal(preparePreview(PREVIEW, "umap3d").dimensions, 3);
+  assert.equal(PREVIEW.memoryDetails.length, 400);
+  assert.equal(PREVIEW.backgroundPaths.length, 36);
+  for (const detail of PREVIEW.memoryDetails) {
+    assert.ok(detail.text.length > 0);
+    assert.equal(detail.matches.length, 3);
+    assert.ok(detail.matches.every(m => PREVIEW.paths[m.path].includes(m.point)));
+    assert.ok(detail.matches[0].score >= detail.matches[1].score);
+  }
+});
+
+test("memory highlights prefer visible foreground depth, not screen proximity", () => {
+  const points = [[150, 100, .8], [155, 110, .75], [200, 150, -.2], [1000, 100, 1]];
+  const details = points.map((p, i) => ({ point: i, text: `Memory ${i}`, matches: [{ path: 0, point: i, score: .8 }] }));
+  assert.equal(previewFrontMemory(details, points, 400, 300).point, 0);
+  assert.equal(previewFrontMemory(details, points, 400, 300, 0).point, 1);
+  assert.equal(previewFrontMemory([details[2], details[3]], points, 400, 300).point, 2);
+  assert.equal(previewFrontMemory([details[3]], points, 400, 300), null);
+  const data = { ...PREVIEW, memoryDetails: [{ ...PREVIEW.memoryDetails[0], matches: [{ path: -1, point: 0, score: .9 }] }] };
+  assert.throws(() => preparePreview(data, "umap3d"), /Invalid original-space memory match/);
+});
+
+test("preview zoom is a slow bounded cycle and highlights only sampled memories", () => {
+  assert.equal(previewAutoZoom(0), 1);
+  assert.ok(Math.abs(previewAutoZoom(15000) - 1.06) < 1e-12);
+  assert.ok(Math.abs(previewAutoZoom(45000) - .94) < 1e-12);
+  assert.ok(Math.abs(previewAutoZoom(60000) - 1) < 1e-12);
+  assert.equal(previewMemoryHighlight([], 0), null);
+  assert.equal(previewMemoryHighlight([4], 0).opacity, 1);
+  const ids = [4, 9, 17, 31, 55, 81, 102, 130];
+  const highlighted = new Set();
+  for (let t = 0; t < 100000; t += 250) {
+    const point = previewMemoryHighlight(ids, t);
+    assert.ok(ids.includes(point.id)); highlighted.add(point.id);
+    assert.ok(point.opacity >= 0 && point.opacity <= 1);
+    assert.ok(point.radius >= 5.5 && point.radius <= 8.5);
+  }
+  assert.equal(highlighted.size, 6);
+});
+
+test("landing preview rotates only measured 3D coordinates and keeps t-SNE flat", () => {
+  const data = { pointIds: [4, 9], turns: [0, 1], memories: [1], paths: [[0, 1]], layouts: {
+    real3d: { dimensions: 3, coordinates: [[-1, 0, 0], [1, 0, 2]] },
+    tsne: { dimensions: 2, coordinates: [[-1, 0], [1, 0]] },
+  } };
+  const real = preparePreview(data, "real3d"), flat = preparePreview(data, "tsne");
+  assert.equal(real.coordinates[0].length, 3);
+  assert.equal(flat.coordinates[0].length, 2);
+  assert.notDeepEqual(previewProjection(real.coordinates, 3, 0, 0, 400, 300), previewProjection(real.coordinates, 3, 1, .5, 400, 300));
+  assert.deepEqual(previewProjection(flat.coordinates, 2, 0, 0, 400, 300), previewProjection(flat.coordinates, 2, 1, .5, 400, 300));
+  assert.throws(() => preparePreview(data, "missing"), /Missing measured/);
+  assert.throws(() => preparePreview({ ...data, paths: [[0, 10]] }, "real3d"), /Invalid preview point/);
+  assert.throws(() => preparePreview({ ...data, layouts: { wrong: { dimensions: 3, coordinates: [[0, 1], [2, 3]] } } }, "wrong"), /Invalid measured/);
+});
+
+test("preview dragging rotates 3D, pans 2D, and animation stops when inactive", () => {
+  const origin = { yaw: 0, pitch: 0, pan: [0, 0], zoom: 1 };
+  assert.notEqual(previewDrag(3, origin, 30, 20).yaw, 0);
+  assert.equal(previewDrag(3, origin, 30, 10000).pitch, 1.45);
+  assert.deepEqual(previewDrag(2, origin, 30, 20).pan, [30, 20]);
+  assert.deepEqual(origin.pan, [0, 0]);
+  const active = { visible: true, hidden: false, spinning: true, dragging: null, dimensions: 3 };
+  assert.equal(previewShouldAnimate(active), true);
+  for (const override of [{ visible: false }, { hidden: true }, { spinning: false }, { dragging: {} }, { hovering: true }, { dimensions: 2 }]) assert.equal(previewShouldAnimate({ ...active, ...override }), false);
+  assert.equal(previewShouldAnimate({ ...active, hovering: false }), true);
+});
 
 test("static demo packs preserve point order, gzip scores, and plain local atlases", async () => {
   const plain = { schemaVersion: 2, points: [1] };

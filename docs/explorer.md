@@ -1,7 +1,10 @@
 # Memory Atlas
 
 The project root is a paper landing page. It links to `atlas.html`, the full explorer.
-The landing page is static, needs no JavaScript, and does not download any atlas data.
+The landing page does not download the full atlas. Its optional preview script loads a compact coordinate and memory-example module, with a text-free SVG fallback when JavaScript is unavailable.
+The large, button-free cloud sits on the right and slightly overlaps the heading. It starts rotating genuine 3D UMAP coordinates automatically, at 1.5× zoom with a subtle ±6% zoom cycle over 60 seconds. Hovering or dragging pauses automatic motion; leaving the cloud resumes it unless explicitly paused with Space. Drag to rotate, scroll to zoom, or use the arrow keys. Reduced-motion preferences disable automatic motion, and animation stops offscreen or in hidden tabs. Highlights favor visible memories near the camera, showing the memory text immediately in a small bubble (long text is visually clipped), even when motion is disabled. The corresponding session paths turn blue, with dashed orange links to the three closest source turns by original-space cosine within that memory's first containing history. These are similarity matches, not verified provenance or fact coverage. Foreground depth affects presentation only, not the match ranking. The full Atlas still has its projection controls.
+The interactive sample uses 6,000 source turns, 400 Ext-Dense memories, and 36 background session paths selected by evenly spaced IDs. Additional complete session paths are exported for the matches and appear only with the corresponding highlight. The legend identifies this as a LongMemEval sample. The SVG fallback uses 1,500 turns, 100 memories, and 24 paths from the 2D UMAP layout. The interactive module contains measured 3D coordinates, redacted memory display text, and compact match IDs/scores, not source-turn text, full matrices, or vectors. Regenerate both with `python tools/build_landing_preview.py`; it checks the existing local correspondence sidecars without new embedding or LLM calls.
+The orbit keeps its yaw speed and adds a gentle 48-second pitch cycle. Memory bubbles keep a 24-pixel gap from the highlighted point, may extend outside the canvas, and choose a position within the viewport that avoids the heading and links. The bubble contains the memory text without an explanatory caption.
 The poster link is omitted until the authors provide a poster file.
 
 Memory Atlas shows many real conversations in one shared embedding space.
@@ -118,6 +121,7 @@ python3 tools/serve_atlas.py --data outputs/atlas/atlas.json
 ```
 
 Open `http://127.0.0.1:8766/` for the paper page, or `http://127.0.0.1:8766/atlas.html` for the explorer.
+Use these HTTP addresses in any browser. Opening `site/index.html` directly with `file://` blocks JavaScript modules and shows the static 2D fallback instead of the interactive 3D preview.
 The server binds only to localhost.
 It serves the static viewer from `site/` and the selected ignored atlas separately as `/atlas.json`.
 The atlas is not copied into the publishable site directory.

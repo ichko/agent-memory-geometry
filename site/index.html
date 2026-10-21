@@ -4,36 +4,52 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="An offline study of relationships between conversations, stored memories, queries, and answer correctness across five evaluated memory systems.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta property="og:title" content="The Geometry of Agent Memory">
   <meta property="og:description" content="Studying relationships between conversations, stored memories, and queries. PALM Workshop at NeurIPS 2026.">
   <meta property="og:type" content="website">
   <title>The Geometry of Agent Memory</title>
-  <link rel="stylesheet" href="./landing.css?v=3">
+  <link rel="stylesheet" href="./landing.css?v=13">
+  <script type="module" src="./landing-preview.js?v=9"></script>
 </head>
 <body>
   <a class="skip-link" href="#study">Skip to the study</a>
   <div class="page">
     <main>
       <section class="hero" aria-labelledby="paper-title">
-        <p class="eyebrow">PALM Workshop · NeurIPS 2026 · Poster</p>
-        <h1 id="paper-title">The Geometry of Agent Memory</h1>
-        <p class="subtitle">Forecasting Retrieval-Bound Memory Failures, and Characterizing Its Limits</p>
-        <ul class="authors" aria-label="Authors">
-          <li><a href="https://www.linkedin.com/in/iliya-zhechev/" aria-label="Iliya Zhechev on LinkedIn">Iliya Zhechev</a></li>
-          <li><a href="https://www.linkedin.com/in/radoslav-ralev-aaa799156/" aria-label="Radoslav Ralev on LinkedIn">Radoslav Ralev</a></li>
-          <li><a href="https://www.linkedin.com/in/c-col/" aria-label="Chris Coleman on LinkedIn">Chris Coleman</a></li>
-          <li><a href="https://www.linkedin.com/in/srijith-rajamohan-ph-d-4242b9a/" aria-label="Srijith Rajamohan on LinkedIn">Srijith Rajamohan</a></li>
-          <li><a href="https://www.linkedin.com/in/honeyjainagarwal/" aria-label="Jen Agarwal on LinkedIn">Jen Agarwal</a></li>
-          <li><a href="https://www.linkedin.com/in/tyler-hutcherson/" aria-label="Tyler Hutcherson on LinkedIn">Tyler Hutcherson</a></li>
-          <li><a href="https://www.linkedin.com/in/simba-k/" aria-label="Simba Khadder on LinkedIn">Simba Khadder</a></li>
-        </ul>
-        <p class="affiliation">Redis</p>
-        <nav class="resources" aria-label="Project resources">
-          <a class="primary-resource" href="https://arxiv.org/abs/2610.26433">Read the paper <span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/ichko/agent-memory-geometry">Code &amp; data <span aria-hidden="true">↗</span></a>
-          <a href="./atlas.html">Explore the Atlas <span aria-hidden="true">↗</span></a>
-        </nav>
+        <div class="hero-copy">
+          <p class="eyebrow">PALM Workshop · NeurIPS 2026 · Poster</p>
+          <h1 id="paper-title">The Geometry of Agent Memory</h1>
+          <p class="subtitle"><span>Forecasting Retrieval-Bound Memory Failures,</span> <span>and Characterizing Its Limits</span></p>
+          <ul class="authors" aria-label="Authors">
+            <li><a href="https://www.linkedin.com/in/iliya-zhechev/" aria-label="Iliya Zhechev on LinkedIn">Iliya Zhechev</a></li>
+            <li><a href="https://www.linkedin.com/in/radoslav-ralev-aaa799156/" aria-label="Radoslav Ralev on LinkedIn">Radoslav Ralev</a></li>
+            <li><a href="https://www.linkedin.com/in/c-col/" aria-label="Chris Coleman on LinkedIn">Chris Coleman</a></li>
+            <li><a href="https://www.linkedin.com/in/srijith-rajamohan-ph-d-4242b9a/" aria-label="Srijith Rajamohan on LinkedIn">Srijith Rajamohan</a></li>
+            <li><a href="https://www.linkedin.com/in/honeyjainagarwal/" aria-label="Jen Agarwal on LinkedIn">Jen Agarwal</a></li>
+            <li><a href="https://www.linkedin.com/in/tyler-hutcherson/" aria-label="Tyler Hutcherson on LinkedIn">Tyler Hutcherson</a></li>
+            <li><a href="https://www.linkedin.com/in/simba-k/" aria-label="Simba Khadder on LinkedIn">Simba Khadder</a></li>
+          </ul>
+          <p class="affiliation">Redis</p>
+          <nav class="resources" aria-label="Project resources">
+            <a class="primary-resource" href="https://arxiv.org/abs/2610.26433">Read the paper <span aria-hidden="true">↗</span></a>
+            <a href="https://github.com/ichko/agent-memory-geometry">Code &amp; data <span aria-hidden="true">↗</span></a>
+            <a href="./atlas.html">Explore the Atlas <span aria-hidden="true">↗</span></a>
+          </nav>
+        </div>
+        <figure class="hero-preview" aria-labelledby="preview-caption">
+          <div class="preview-stage">
+            <a id="preview-fallback" href="./atlas.html" aria-label="Explore these real dataset embeddings in the Memory Atlas">
+              <img src="./atlas-preview.svg" width="260" height="230" alt="Sampled LongMemEval source turns and memories, using their measured UMAP positions.">
+            </a>
+            <canvas id="hero-canvas" tabindex="0" aria-label="Real dataset preview" hidden></canvas>
+          </div>
+          <aside class="preview-memory-bubble" id="preview-memory" aria-label="Highlighted memory" hidden>
+            <span class="preview-memory-label">Memory</span>
+            <p class="preview-memory-text"></p>
+          </aside>
+          <figcaption id="preview-caption"><span class="preview-source">LongMemEval sample</span><span><i class="preview-turn"></i>Turns <i class="preview-memory"></i>Memories</span></figcaption>
+        </figure>
       </section>
 
       <aside class="question-band" aria-label="Research question">

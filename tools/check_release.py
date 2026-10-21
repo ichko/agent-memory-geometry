@@ -120,6 +120,7 @@ def main():
         allowed |= relative.parts[0] in {"src", "tests", "tools"} and path.suffix == ".py"
         allowed |= relative.as_posix() == "tests/explorer.test.mjs"
         allowed |= relative.parts[0] == "site" and path.suffix in {".html", ".css", ".js", ".mjs"}
+        allowed |= relative.as_posix() == "site/atlas-preview.svg"
         allowed |= relative.as_posix() == ".github/workflows/pages.yml"
         allowed |= relative.parts[0] == "docs" and path.suffix == ".md"
         allowed |= relative.parts[0] == "data" and (path.suffix == ".csv" or relative.as_posix() in {"data/README.md", "data/manifest.json"})
