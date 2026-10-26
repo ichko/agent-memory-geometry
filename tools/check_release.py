@@ -31,7 +31,7 @@ FIELDS = {
     "selection_locomo": ["conversation_id", "question_id", "condition", "n_memories_used", "score", "k"],
     "nearest_turn": ["conversation_id", "question_id", "category", "score", "nearest_turn_distance"],
 }
-PUBLIC_EMAILS = {"iliya.zhechev@redis.com", "radoslav.ralev@redis.com", "ccol@u.northwestern.edu",
+PUBLIC_EMAILS = {"iliya.zhechev@gmail.com", "radoslav.ralev@redis.com", "ccol@u.northwestern.edu",
                  "srijith.rajamohan@gmail.com", "honey.agarwal@gmail.com",
                  "tyler.hutcherson@redis.com", "simba.khadder@redis.com", "garnett@wustl.edu"}
 PATTERNS = {
