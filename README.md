@@ -1,14 +1,13 @@
 # The Geometry of Agent Memory
 
-Analysis code and numerical artifacts for:
+Analysis code and numerical artifacts for **The Geometry of Agent Memory: Forecasting Retrieval-Bound Memory Failures, and Characterizing Its Limits**.
 
-**The Geometry of Agent Memory: Forecasting Retrieval-Bound Memory Failures, and Characterizing Its Limits**
+[📄 Paper](https://arxiv.org/abs/2610.26433) ([PDF](paper/geometry_of_agent_memory.pdf)) · [📝 Reviews](https://openreview.net/forum?id=xP0xvmQZhB) · [🌐 Project page](https://ichko.github.io/agent-memory-geometry/) · [🧭 Memory Atlas](https://ichko.github.io/agent-memory-geometry/atlas.html) · [🔬 Protocol](docs/protocol.md)
 
-Iliya Zhechev, Radoslav Ralev, Chris Coleman, Srijith Rajamohan, Jen Agarwal, Tyler Hutcherson, and Simba Khadder.
+> [!NOTE]
+> 🎉 **Accepted at PALM, NeurIPS 2026.**
 
-Accepted as a poster at PALM, NeurIPS 2026.
-
-[arXiv](https://arxiv.org/abs/2610.26433) · [Paper and reviews](https://openreview.net/forum?id=xP0xvmQZhB) · [Paper PDF](paper/geometry_of_agent_memory.pdf) · [Live demo](https://www.izhv.eu/agent-memory-geometry/) · [Protocol](docs/protocol.md)
+**Authors:** Iliya Zhechev, Radoslav Ralev, Chris Coleman, Srijith Rajamohan, Jen Agarwal, Tyler Hutcherson, and Simba Khadder.
 
 ## What this study shows
 
@@ -22,7 +21,7 @@ These results characterize the evaluated representations. They do not establish 
 
 ## Memory Atlas explorer
 
-[Open the live demo](https://www.izhv.eu/agent-memory-geometry/).
+[🧭 Open the Memory Atlas](https://ichko.github.io/agent-memory-geometry/atlas.html).
 
 The static explorer under `site/` shows real conversation sessions as chronological paths in a shared embedding map.
 UMAP is the default. Optional t-SNE and PCA provide comparison views. Toggle 2D/3D when real three-axis layouts are present; t-SNE is 2D only.
